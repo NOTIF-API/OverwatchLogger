@@ -1,6 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 using Exiled.API.Interfaces;
+
+using OverwatchLogger.Serelizables;
+
+using PlayerRoles;
 
 namespace OverwatchLogger
 {
@@ -10,25 +15,25 @@ namespace OverwatchLogger
         public bool IsEnabled { get; set; } = true;
         [Description("Will debug messages be visible?")]
         public bool Debug { get; set; } = true;
-        [Description("Webhook link for sending messages")]
-        public string WeebHookUrl { get; set; } = "";
-        [Description("Overrides the webhook name (if left blank it uses the default one set in discord)")]
-        public string WeebHookName { get; set; } = "";
-        [Description("Overrides the webhook avatar (if left blank it uses the default one set in discord)")]
-        public string WeebHookAvatarUrl { get; set; } = "";
-        [Description("When the admin turns on the overmatch (any player who has been given this role)")]
-        public string EnterMessage { get; set; } = "Staff %player% entered to overwatch mode.";
-        [Description("When the admin turns off the overmatch (any player who was given this role)")]
-        public string ExitMessage { get; set; } = "Staff %player% exited from overwatch mode.";
-        [Description("Top message, displayed for the total (1 line)")]
-        public string RoundEndSummary { get; set; } = "Round ended. Staff's who used overwatch";
-        [Description("Message constructor for each player who turned on overmatch in the round")]
-        public string StaffSummary { get; set; } = "[%player%] used overwatch %hours% %minutes% %seconds%";
-        [Description("message replacement for %hours%, where %h% is the total number of hours (if = 0 then the message will not be output)")]
-        public string Hhours { get; set; } = "%h% hours";
-        [Description("message replacement for %minutes%, where %m% is the total number of minutes (if = 0 then the message will not appear)")]
-        public string Mminutes { get; set; } = "%m% minutes";
-        [Description("message replacement for %seconds%, where %s% is the final number of seconds (if = 0 then the message will not be output)")]
-        public string Sseconds { get; set; } = "%s% seconds";
+        [Description("Hook settings")]
+        public WeebHookSerelizable Hook { get; set; } = new()
+        {
+            HookName="Role enter time logger"
+        };
+        [Description("Settings for display message in weebhook")]
+        public LogMessagesSerelizable LogMessages { get; set; } = new();
+        [Description("List roles for display assgned round time")]
+        public List<RoleTypeId> TrackedRoles { get; set; } = new()
+        {
+            RoleTypeId.Overwatch,
+            RoleTypeId.Tutorial
+        };
+        [Description("Will the plugin only log server staff")]
+        public bool LogOnlyStaffRoles { get; set; } = false;
+        [Description("Groups to be ignored (only if staff logging is enabled)")]
+        public List<string> IgnoredGroups { get; set; } = new()
+        {
+            "owner"
+        };
     }
 }

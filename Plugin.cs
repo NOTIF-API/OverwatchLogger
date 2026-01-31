@@ -10,41 +10,34 @@ namespace OverwatchLogger
     {
         public static Plugin Instance { get; private set; }
 
-        public override string Author => "notifapi";
+        public override string Author { get; } = "notifapi";
 
-        public override Version RequiredExiledVersion => new Version(9, 0 ,0);
+        public override Version RequiredExiledVersion { get; } = new Version(9, 0 ,0);
 
-        public override Version Version => new Version(1,0,0);
+        public override Version Version { get; } = new Version(2, 0, 0);
 
-        public WeebHookClient whook { get; private set; }
-
-        private OverTracker OverTracker;
+        public override bool IgnoreRequiredVersionCheck { get; } = false;
 
         public override void OnEnabled()
         {
             Instance = this;
-            whook = new WeebHookClient(Config.WeebHookUrl, Config.WeebHookName, Config.WeebHookAvatarUrl);
-            OverTracker = new OverTracker();
-            Exiled.Events.Handlers.Player.ChangingRole += OverTracker.OnOverwactEnabled;
-            Exiled.Events.Handlers.Player.Verified += OverTracker.OnPlayerVerefied;
-            Exiled.Events.Handlers.Server.WaitingForPlayers += OverTracker.OnWaitingForPlayers;
-            Exiled.Events.Handlers.Server.RoundEnded += OverTracker.OnRoundEnded;
-            if (string.IsNullOrWhiteSpace(Config.WeebHookUrl))
-            {
-                Log.Warn("Weebhook url do not entered into config");
-                OnDisabled();
-                return;
-            }
+
+            HookHelper.Start();
+
+            Exiled.Events.Handlers.Server.WaitingForPlayers += EventHandler.OnWaitingForPlayers;
+            Exiled.Events.Handlers.Server.RoundEnded += EventHandler.OnRoundEnded;
+            Exiled.Events.Handlers.Player.Spawned += EventHandler.OnSpawned;
+            
             base.OnEnabled();
         }
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Player.ChangingRole -= OverTracker.OnOverwactEnabled;
-            Exiled.Events.Handlers.Player.Verified -= OverTracker.OnPlayerVerefied;
-            Exiled.Events.Handlers.Server.WaitingForPlayers -= OverTracker.OnWaitingForPlayers;
-            Exiled.Events.Handlers.Server.RoundEnded -= OverTracker.OnRoundEnded;
-            OverTracker = null;
-            whook = null;
+            Exiled.Events.Handlers.Server.WaitingForPlayers -= EventHandler.OnWaitingForPlayers;
+            Exiled.Events.Handlers.Server.RoundEnded -= EventHandler.OnRoundEnded;
+            Exiled.Events.Handlers.Player.Spawned -= EventHandler.OnSpawned;
+
+            HookHelper.Stop();
+
             Instance = null;
             base.OnDisabled();
         }
