@@ -12,37 +12,50 @@
 # Will the plugin be enabled?
 is_enabled: true
 # Will debug messages be visible?
-debug: true
-# Webhook link for sending messages
-weeb_hook_url: ''
-# Overrides the webhook name (if left blank it uses the default one set in discord)
-weeb_hook_name: ''
-# Overrides the webhook avatar (if left blank it uses the default one set in discord)
-weeb_hook_avatar_url: ''
-# When the admin turns on the overmatch (any player who has been given this role)
-enter_message: 'Staff %player% entered to overwatch mode.'
-# When the admin turns off the overmatch (any player who was given this role)
-exit_message: 'Staff %player% exited from overwatch mode.'
-# Top message, displayed for the total (1 line)
-round_end_summary: 'Round ended. Staff''s who used overwatch'
-# Message constructor for each player who turned on overmatch in the round
-staff_summary: '[%player%] used overwatch %hours% %minutes% %seconds%'
-# message replacement for %hours%, where %h% is the total number of hours (if = 0 then the message will not be output)
-hhours: '%h% hours'
-# message replacement for %minutes%, where %m% is the total number of minutes (if = 0 then the message will not appear)
-mminutes: '%m% minutes'
-# message replacement for %seconds%, where %s% is the final number of seconds (if = 0 then the message will not be output)
-sseconds: '%s% seconds'
+debug: false
+# Hook settings
+hook:
+# Link to the webhook through which the message will be sent
+  hook_url: ''
+  # Link to webhook avatar (can be left blank, in which case the avatar posted on Discord will be used)
+  hook_avatar: ''
+  # Webhook name, used to separate the message with a name (empty form field = name configured in Discord)
+  hook_name: 'Role enter time logger'
+# Settings for display message in weebhook
+log_messages:
+# Log message when entering a specific role mode
+  entered_message: 'Staff %player% entered to %role%'
+  # Log message when exiting a specific role mode
+  exited_message: 'Staff %player% exited from %role%'
+  # Summary message with the results of using the role
+  summary_info: 'Round ended, entered roles time count:\n %summary%'
+  # View of the line with the total time for the player used N role
+  summary: '[%player%] used role %role% %hours% %minutes% %seconds%'
+  # Line for seconds
+  seconds: '%count% seconds'
+  # Line for minutes
+  minutes: '%count% minutes'
+  # Line for total hours
+  hours: '%count% hours'
+# List roles for display assgned round time
+tracked_roles:
+- Overwatch
+- Tutorial
+# Will the plugin only log server staff
+log_only_staff_roles: false
+# Groups to be ignored (only if staff logging is enabled)
+ignored_groups:
+- 'owner'
 ```
 
 ## How edit
 **Attention in standard configs all places where the words listed below were mentioned for rearrangement can be used only in the same places but in a different order, do not use words where they were not intended to be used!**
 | effect_line | description |
 | ------------ | ----- |
-| %player%     | Replace to player display nickname |
-| %s%          | Number of seconds |
-| %m%          | Number of minuts |
-| %h%          | Number of hours |
-| %hours%      | Replaced by hhours line |
-| %minutes%    | Replaced by mminutes line |
-| %seconds%    | Replaced by sseconds line |
+| %player%     | Replace to player nickname |
+| %count%      | Replace a total formatted time |
+| %role%       | Reolace role name |
+| %hours%      | Return hours line |
+| %minutes%    | Return minutes line | 
+| %seconds%    | Return seconds line |
+| %summary%    | Return total summary from summary generated lines |
