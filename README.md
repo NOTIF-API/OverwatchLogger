@@ -7,7 +7,7 @@
 1. You can contact me via [Issues](https://github.com/NOTIF-API/OverwatchLogger/issues).
 2. You can contact me via Discord under the name `notifapi` or `NOTIF` if you are looking for connections through servers with SCP or Exiled.
 
-# Configs
+# Configs (Defaults)
 ```yaml
 # Will the plugin be enabled?
 is_enabled: true
@@ -24,9 +24,9 @@ hook:
 # Settings for display message in weebhook
 log_messages:
 # Log message when entering a specific role mode
-  entered_message: 'Staff %player% entered to %role%'
+  entered_message: 'Staff %player% (%steamid%) entered to %role%'
   # Log message when exiting a specific role mode
-  exited_message: 'Staff %player% exited from %role%'
+  exited_message: 'Staff %player% (%steamid%) exited from %role%'
   # Summary message with the results of using the role
   summary_info: 'Round ended, entered roles time count:\n %summary%'
   # View of the line with the total time for the player used N role
