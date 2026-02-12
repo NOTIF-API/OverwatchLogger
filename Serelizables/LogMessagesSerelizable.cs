@@ -5,9 +5,9 @@ namespace OverwatchLogger.Serelizables
     public class LogMessagesSerelizable
     {
         [Description("Log message when entering a specific role mode")]
-        public string EnteredMessage { get; set; } = "Staff %player% entered to %role%";
+        public string EnteredMessage { get; set; } = "Staff %player% (%steamid%) entered to %role%";
         [Description("Log message when exiting a specific role mode")]
-        public string ExitedMessage { get; set; } = "Staff %player% exited from %role%";
+        public string ExitedMessage { get; set; } = "Staff %player% (%steamid%) exited from %role%";
         [Description("Summary message with the results of using the role")]
         public string SummaryInfo { get; set; } = "Round ended, entered roles time count: %summary%";
         [Description("View of the line with the total time for the player used N role")]

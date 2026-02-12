@@ -32,7 +32,7 @@ namespace OverwatchLogger
             {
                 EnterHandler.AddPlayer(e.Player, e.OldRole, (DateTime)e.Player.SessionVariables[$"{e.OldRole.Type}-time"], DateTime.Now);
                 e.Player.SessionVariables.Remove($"{e.OldRole.Type}-time");
-                string exited = l.LogMessages.ExitedMessage.Replace("%player%", e.Player.Nickname).Replace("%role%", e.OldRole.Type.ToString());
+                string exited = l.LogMessages.ExitedMessage.Replace("%player%", e.Player.Nickname).Replace("%role%", e.OldRole.Type.ToString()).Replace("%steamid%", e.Player.UserId);
                 HookHelper.AddLogMessage(exited, l.Hook);
             }
             if (l.TrackedRoles.Contains(e.Player.Role.Type))
@@ -42,7 +42,7 @@ namespace OverwatchLogger
                     if (e.Player.Group == null) return;
                     if (Config.IgnoredGroups.Contains(e.Player.Group.Name)) return;
                 }
-                string entered = l.LogMessages.EnteredMessage.Replace("%player%", e.Player.Nickname).Replace("%role%", e.Player.Role.Type.ToString());
+                string entered = l.LogMessages.EnteredMessage.Replace("%player%", e.Player.Nickname).Replace("%role%", e.Player.Role.Type.ToString()).Replace("%steamid%", e.Player.UserId);
                 HookHelper.AddLogMessage(entered, l.Hook);
                 if (!e.Player.SessionVariables.ContainsKey($"{e.Player.Role.Type}-time")) e.Player.SessionVariables[$"{e.Player.Role.Type}-time"] = DateTime.Now;
             }

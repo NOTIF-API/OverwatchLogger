@@ -14,7 +14,7 @@ namespace OverwatchLogger
 
         public override Version RequiredExiledVersion { get; } = new Version(9, 0 ,0);
 
-        public override Version Version { get; } = new Version(2, 0, 0);
+        public override Version Version { get; } = new Version(2, 0, 1);
 
         public override bool IgnoreRequiredVersionCheck { get; } = false;
 
