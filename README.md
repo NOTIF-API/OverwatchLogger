@@ -59,3 +59,4 @@ ignored_groups:
 | %minutes%    | Return minutes line | 
 | %seconds%    | Return seconds line |
 | %summary%    | Return total summary from summary generated lines |
+| %steamid%    | Return userid |
